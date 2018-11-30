@@ -7,7 +7,11 @@ package visao;
 
 import controle.ajudaControl;
 import controle.orcamentoControl;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.DefaultCellEditor;
+import modelo.Contrato;
+import modelo.Peca;
 
 /**
  * 
@@ -16,8 +20,7 @@ import javax.swing.DefaultCellEditor;
 public class Orcamento extends javax.swing.JFrame {
     // Creates new form Orcamento
     public Orcamento() {
-        initComponents();
-        
+        initComponents();   
     }
 
     /**
@@ -49,7 +52,7 @@ public class Orcamento extends javax.swing.JFrame {
         totalGeral = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTabela = new javax.swing.JTable();
         emailCliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -128,7 +131,7 @@ public class Orcamento extends javax.swing.JFrame {
 
         jLabel5.setText("Total Geral");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -171,17 +174,17 @@ public class Orcamento extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowSelectionAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(132);
-            jTable1.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(jComboBox2));
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(410);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTabela.setRowSelectionAllowed(false);
+        jScrollPane1.setViewportView(jTabela);
+        if (jTabela.getColumnModel().getColumnCount() > 0) {
+            jTabela.getColumnModel().getColumn(0).setResizable(false);
+            jTabela.getColumnModel().getColumn(0).setPreferredWidth(132);
+            jTabela.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(jComboBox2));
+            jTabela.getColumnModel().getColumn(1).setResizable(false);
+            jTabela.getColumnModel().getColumn(1).setPreferredWidth(410);
+            jTabela.getColumnModel().getColumn(2).setResizable(false);
+            jTabela.getColumnModel().getColumn(3).setResizable(false);
+            jTabela.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jLabel6.setText("e-Mail");
@@ -373,7 +376,8 @@ public class Orcamento extends javax.swing.JFrame {
 
     private void ButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSalvarActionPerformed
         // TODO add your handling code here:
-        orcamentoControl.saveNewContractToFile(this);
+        orcamentoControl.saveNewContractToFile(this, this.contrato);
+        orcamentoControl.getIDS();
     }//GEN-LAST:event_ButtonSalvarActionPerformed
 
     private void clienteCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteCEPActionPerformed
@@ -387,9 +391,8 @@ public class Orcamento extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemGuiaUsuarioActionPerformed
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
-        
+
         ajudaControl.displaySobre();
-        
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     private void jMenuHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpActionPerformed
@@ -431,7 +434,9 @@ public class Orcamento extends javax.swing.JFrame {
             new Orcamento().setVisible(true);
         });
     }
-
+    
+    public Contrato contrato = new Contrato();
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonExportar;
     private javax.swing.JButton ButtonSalvar;
@@ -461,7 +466,7 @@ public class Orcamento extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSpinner jSpinnerPreço;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTabela;
     private javax.swing.JTextField localPerfuracao;
     private javax.swing.JTextField nomeDoCliente;
     private javax.swing.JTextField totalGeral;
@@ -469,7 +474,7 @@ public class Orcamento extends javax.swing.JFrame {
 
     public void setNome(String name){
         nomeDoCliente.setText(name);
-   }
+    }
     
     public String getNome(){
         return nomeDoCliente.getText();
@@ -533,5 +538,62 @@ public class Orcamento extends javax.swing.JFrame {
     
     public void setContractType(int selected){
         Type.setSelectedIndex(selected);
+    }
+    
+    public void setColuna0(){
+        /* TODO */
+        /* coluna referente ao tipo */
+    }
+    
+    public void setColuna1(ArrayList<String> toSet){
+        /* coluna referente a descricao */
+        for(int i = 0; i < toSet.size(); i++)
+            this.jTabela.setValueAt(toSet, i, 1);
+   }
+    
+    public void setColuna2(ArrayList<Integer> toSet){
+        /* coluna referente a quantidade */
+        for(int i = 0; i < toSet.size(); i++)
+            this.jTabela.setValueAt(toSet, i, 2);
+    }
+    
+    public void setColuna3(ArrayList<Double> toSet){
+        /* coluna referente ao preco */
+        for(int i = 0; i < toSet.size(); i++)
+            this.jTabela.setValueAt(toSet, i, 3);
+    }
+    
+    public void setColuna4(ArrayList<Double> toSet) {
+        /* coluna referente ao total */
+        for(int i = 0; i < toSet.size(); i++)
+            this.jTabela.setValueAt(toSet, i, 4);
+    }
+    
+    public HashMap<String, Peca> getColunas(){
+        HashMap<String, Peca> PM = new HashMap<>();
+        
+        String Name;
+        String Tipo;
+        int Quant;
+        double Price;
+        /* percorre os todo os campos da tabela, achar mameira melhor de fazer isso */
+        for (int i = 0; i < 28; i++){
+            if(this.jTabela.getValueAt(i, 0) != null 
+            && this.jTabela.getValueAt(i, 1) != null 
+            && this.jTabela.getValueAt(i, 2) != null
+            && this.jTabela.getValueAt(i, 3) != null){
+            
+                Tipo = this.jTabela.getValueAt(i, 0).toString();
+                Name = this.jTabela.getValueAt(i, 1).toString();
+                Quant = Integer.parseInt(this.jTabela.getValueAt(i, 2).toString());
+                Price = Double.parseDouble(this.jTabela.getValueAt(i, 3).toString());
+            
+                if(Tipo != null && Name != null && Quant != 0 && Price != 0){
+                    Peca peca = new Peca(Name, Tipo, Quant, Price);
+                    PM.put(peca.getName(), peca);
+                }
+            }
+        }
+        return PM;
     }
 }

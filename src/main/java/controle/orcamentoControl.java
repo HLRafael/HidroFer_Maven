@@ -16,8 +16,8 @@ import visao.Orcamento;
  * @author milson
  */
 public class orcamentoControl {
-    public static void saveNewContractToFile(Orcamento orcamento){
-        Contrato contrato = new Contrato();
+    public static void saveNewContractToFile(Orcamento orcamento, Contrato contrato){
+        
         /* TODO: falta implementar o controlador de erro, para verificar se os dados dos campos estao corretos */
         /* ID do contrato consiste da data de criacao e é criado quando o objeto é instanciado */
         
@@ -33,6 +33,8 @@ public class orcamentoControl {
         contrato.setType(orcamento.getContractType());
         
         /* TODO: get e set de todas a variaveis da tabela, pra fazer isso precisa converter de hash map pra array */
+        
+        contrato.setHashMap(orcamento.getColunas());
         
         /* Debug line */
         System.out.println(contrato.toString());
@@ -56,6 +58,14 @@ public class orcamentoControl {
         
         orcamento.setLocalPerfuracao(contrato.getLocalP());
         orcamento.setContractType(JSType.toInteger(contrato.getType()));
+        
+        /* setando referente as pecas */
+        /* falta implementar o metodo que retorna cada campo baseado nas variaveis do hash map em formato de ArrayList */
+        //orcamento.setColuna0();
+        //orcamento.setColuna1();
+        //orcamento.setColuna2();
+        //orcamento.setColuna3();
+        //orcamento.setColuna4();
         
         /* TODO: get e set de todas a variaveis da tabela, pra fazer isso precisa converter de hash map pra array */
     }

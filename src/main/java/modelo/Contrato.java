@@ -14,19 +14,10 @@ public class Contrato implements java.io.Serializable {
     String localDePerfuracao;
     public Cliente client;
     public maoDeObra labor; 
-    public Map<String, Peca> pecasMap;
+    public HashMap<String, Peca> pecasMap;
     float Total;
     boolean Type; /* true é contrato, flase é orcamento preventivo */
-    
-    public Contrato (String ID, Date date, Cliente client, Endereco addres, maoDeObra labor, Map<String,Peca> pecasMap){
-        /* este constructor nao é utilizado */
-        this.ID = ID;
-        this.date = date;
-        this.client = client;
-        this.labor = labor;
-        this.pecasMap = pecasMap;
-    }
-    
+     
     public Contrato (){
         /* Criacao do ID do contrato no momento da criacao do objeto */
         this.ID = ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
@@ -81,9 +72,14 @@ public class Contrato implements java.io.Serializable {
         });
     }
     
+    /* usado para debugar */
     @Override
     public String toString(){
         return "Contrato{ID="+ID+",Date="+date.toString()+",localDePerfuracao="+localDePerfuracao+","+client.toString()+","+labor.toString()+"}";
+    }
+    
+    public void setHashMap(HashMap<String,Peca> toSet){
+        this.pecasMap = new HashMap<>(toSet);
     }
     /* TODO: Terminar metodos */
 }
